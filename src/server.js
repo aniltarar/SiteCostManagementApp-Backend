@@ -7,10 +7,14 @@ const swaggerUi = require('swagger-ui-express');
 
 // routes import
 const authRoute = require("./routes/authRoute.js")
+const siteRoute = require("./routes/siteRoute.js");
 
 const app = express();
 dotenv.config();
-app.use(cors());
+app.use(cors({
+    origin:"http://localhost:3000",
+    credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -24,6 +28,7 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use("/auth", authRoute);
+app.use("/site", siteRoute);
 
 
 // Swagger

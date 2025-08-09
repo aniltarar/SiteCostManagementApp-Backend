@@ -14,6 +14,20 @@ const swaggerOptions = {
                 description: "Site Cost Management App API Server | Development",
             },
         ],
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: "http",
+                    scheme: "bearer",
+                    bearerFormat: "JWT"
+                }
+            }
+        },
+        security: [
+            {
+                bearerAuth: []
+            }
+        ]
     },
     apis: ["./src/routes/*.js"],
 };
