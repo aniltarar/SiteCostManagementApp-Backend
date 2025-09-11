@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const Site = require("../model/site.js");
-const User = require("../model/user.js");
 
 const costCategorySchema = new mongoose.Schema(
   {
