@@ -4,11 +4,13 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const swaggerUi = require("swagger-ui-express");
+const morgan = require("morgan");
 
 // routes import
 const authRoute = require("./routes/authRoute.js");
 const siteRoute = require("./routes/siteRoute.js");
 const costCategoryRoute = require("./routes/costCategoryRoute.js");
+const costRoute = require("./routes/costRoute.js");
 
 const app = express();
 dotenv.config();
@@ -20,6 +22,7 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+app.use(morgan("dev"));
 
 // config import
 const swaggerSpec = require("./config/swagger.config.js");
@@ -33,6 +36,7 @@ app.get("/", (req, res) => {
 app.use("/auth", authRoute);
 app.use("/site", siteRoute);
 app.use("/cost-category", costCategoryRoute);
+app.use("/cost", costRoute);
 
 // Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));

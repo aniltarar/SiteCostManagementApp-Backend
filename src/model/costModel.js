@@ -13,18 +13,24 @@ const CostSchema = new mongoose.Schema(
     },
     unit: {
       type: String,
-      enum: [
-        "adet",
-        "kg",
-        "litre",
-        "metre",
-        "santim",
-        "koli",
-        "paket",
-        "diger",
-      ],
+      enum: {
+        values: [
+          "adet",
+          "kg",
+          "litre",
+          "metre",
+          "santim",
+          "koli",
+          "paket",
+          "diger",
+        ],
+        message:
+          "unit sadece şu değerlerden biri olabilir: adet, kg, litre, metre, santim, koli, paket, diger",
+      },
       required: true,
       default: "adet",
+      lowercase: true, // istersen otomatik küçük harfe çevir
+      trim: true,
     },
     quantity: { type: Number, required: true, default: 1 },
     unitPrice: { type: Number, required: true },
