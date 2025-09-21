@@ -1,7 +1,17 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const { register, login, logout, tokenRefresh } = require('../controller/authController.js');
+const {
+  register,
+  login,
+  logout,
+  tokenRefresh,
+} = require("../controller/authController.js");
+const {
+  validateRegistration,
+  validateLogin,
+} = require("../validators/index.js");
+
 /**
  * @swagger
  * tags:
@@ -133,9 +143,9 @@ const { register, login, logout, tokenRefresh } = require('../controller/authCon
  *         description: Sunucu hatası
  */
 
-router.post('/register', register);
-router.post('/login', login);
-router.post('/logout', logout);
-router.post('/token-refresh', tokenRefresh);
+router.post("/register", validateRegistration, register);
+router.post("/login", validateLogin, login);
+router.post("/logout", logout);
+router.post("/token-refresh", tokenRefresh);
 
 module.exports = router;
