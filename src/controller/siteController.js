@@ -4,12 +4,8 @@ const User = require("../model/user.js");
 
 const createSite = async (req, res) => {
   try {
-    const { name, location, budget, startDate, endDate,assignedUsers } = req.body;
-    if (!name || !location || !budget || !startDate || !endDate) {
-      return res.status(400).json({
-        message: "Tüm alanlar gereklidir. Lütfen tüm alanları doldurun.",
-      });
-    }
+    const { name, location, budget, startDate, endDate, assignedUsers } =
+      req.body;
     // kullanıcının kimliğini doğrula
     const userId = req.user.userId; // req.user, kimlik doğrulama middleware tarafından ayarlanmalıdır
     const user = await User.findById(userId);
@@ -41,7 +37,7 @@ const createSite = async (req, res) => {
   }
 };
 
-const getAllSites = async (req, res) => {
+const getAllSites = async (res) => {
   try {
     // Tüm şantiyeleri al, bu sadece "admin" rolüne sahip kullanıcılar için
     const sites = await Site.find().populate(
@@ -110,8 +106,15 @@ const updateSiteById = async (req, res) => {
     const updateFields = {};
 
     // Sadece gönderilen alanları ekle
-    const allowedFields = ["name", "location", "budget", "startDate", "endDate","assignedUsers"];
-    allowedFields.forEach(field => {
+    const allowedFields = [
+      "name",
+      "location",
+      "budget",
+      "startDate",
+      "endDate",
+      "assignedUsers",
+    ];
+    allowedFields.forEach((field) => {
       if (req.body[field] !== undefined) {
         updateFields[field] = req.body[field];
       }
@@ -123,11 +126,9 @@ const updateSiteById = async (req, res) => {
       });
     }
 
-    const updatedSite = await Site.findByIdAndUpdate(
-      siteId,
-      updateFields,
-      { new: true }
-    );
+    const updatedSite = await Site.findByIdAndUpdate(siteId, updateFields, {
+      new: true,
+    });
 
     if (!updatedSite) {
       return res.status(404).json({
@@ -147,4 +148,10 @@ const updateSiteById = async (req, res) => {
   }
 };
 
-module.exports = { createSite, getAllSites, getSiteById, deleteSiteById, updateSiteById };
+module.exports = {
+  createSite,
+  getAllSites,
+  getSiteById,
+  deleteSiteById,
+  updateSiteById,
+};

@@ -42,12 +42,7 @@ const generateTokens = async (user) => {
 const register = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
-    if (!firstName || !lastName || !email || !password) {
-      return res.status(400).json({
-        message:
-          "Ad, soyad, email ve şifre gereklidir. Lütfen tüm alanları doldurun.",
-      });
-    }
+    
 
     // Kullanıcı veritabanında var mı kontrol et
     const existingUser = await User.findOne({
@@ -162,11 +157,7 @@ const tokenRefresh = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) {
-      return res.status(400).json({
-        message: "Email ve şifre gereklidir. Lütfen tüm alanları doldurun.",
-      });
-    }
+   
 
     // Kullanıcıyı veritabanında bul
     const user = await User.findOne({ email });
