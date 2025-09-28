@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body,param } = require("express-validator");
 
 const siteValidationRules = {
   name: body("name")
@@ -54,6 +54,10 @@ const siteValidationRules = {
     .optional()
     .isMongoId()
     .withMessage("Atanan kullanıcı ID'leri geçerli bir ObjectId olmalıdır."),
+
+    siteId: param("siteId")
+    .isMongoId()
+    .withMessage("Geçerli bir şantiye ID'si giriniz.")
 };
 
 module.exports = siteValidationRules;

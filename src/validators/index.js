@@ -26,9 +26,11 @@ const validateSiteCreation = [
   siteValidator.assignedUsers,
   validate,
 ];
+const validateGetSiteById = [siteValidator.siteId, validate];
 
 module.exports = {
   validateRegistration,
   validateLogin,
   validateSiteCreation,
+  validateGetSiteById,
 };

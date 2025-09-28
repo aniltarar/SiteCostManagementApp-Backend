@@ -9,7 +9,7 @@ const {
 } = require("../controller/siteController.js");
 const { verifyAccessToken } = require("../middlewares/authMiddleware.js");
 const { checkRole } = require("../middlewares/checkRole.js");
-const { validateSiteCreation } = require("../validators/index.js");
+const { validateSiteCreation, validateGetSiteById } = require("../validators/index.js");
 
 /**
  * @swagger
@@ -249,7 +249,13 @@ router.post(
   createSite
 );
 router.get("/", verifyAccessToken, checkRole("admin"), getAllSites);
-router.get("/:siteId", verifyAccessToken, checkRole("admin"), getSiteById);
+router.get(
+  "/:siteId",
+  verifyAccessToken,
+  checkRole("admin"),
+  validateGetSiteById,
+  getSiteById
+);
 router.delete(
   "/:siteId",
   verifyAccessToken,
