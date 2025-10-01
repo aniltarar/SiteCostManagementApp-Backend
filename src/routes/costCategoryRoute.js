@@ -9,6 +9,7 @@ const {
 } = require("../controller/costCategoryController.js");
 const { verifyAccessToken } = require("../middlewares/authMiddleware.js");
 const { checkRole } = require("../middlewares/checkRole.js");
+const { validateGetCostCategoriesBySiteId, validateCostCategoryCreation, validateDeleteCostCategory, validateUpdateCostCategory } = require("../validators/index.js");
 
 /**
  * @swagger
@@ -268,14 +269,32 @@ const { checkRole } = require("../middlewares/checkRole.js");
  */
 
 router.get("/", verifyAccessToken, getCostCategories);
-router.get("/:siteId", verifyAccessToken, getCostCategoriesBySiteId);
-router.post("/", verifyAccessToken, checkRole("admin"), createCostCategory);
+router.get(
+  "/:siteId", 
+  verifyAccessToken, 
+  validateGetCostCategoriesBySiteId,
+  getCostCategoriesBySiteId
+);
+router.post(
+  "/", 
+  verifyAccessToken, 
+  checkRole("admin"), 
+  validateCostCategoryCreation,
+  createCostCategory
+);
 router.delete(
   "/:id",
   verifyAccessToken,
   checkRole("admin"),
+  validateDeleteCostCategory,
   deleteCostCategory
 );
-router.put("/:id", verifyAccessToken, checkRole("admin"), updateCostCategory);
+router.put(
+  "/:id", 
+  verifyAccessToken, 
+  checkRole("admin"), 
+  validateUpdateCostCategory,
+  updateCostCategory
+);
 
 module.exports = router;

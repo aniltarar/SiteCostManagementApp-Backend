@@ -44,11 +44,6 @@ const getCostCategoriesBySiteId = async (req, res) => {
 const createCostCategory = async (req, res) => {
   try {
     const { name, description, isGlobal, siteId } = req.body;
-    if (!name || !siteId) {
-      return res.status(400).json({
-        message: "Tüm alanlar gereklidir. Lütfen tüm alanları doldurun.",
-      });
-    }
 
     const userId = req.user.userId;
     const user = await User.findById(userId);

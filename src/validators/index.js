@@ -2,6 +2,7 @@ const validate = require("../middlewares/validateMiddleware.js");
 const userValidator = require("./userValidator.js");
 const siteValidator = require("./siteValidator.js");
 const costValidationRules = require("./costValidator.js");
+const costCategoryValidationRules = require("./costCategoryValidator.js");
 
 // **AUTH VALIDATION RULES**
 // Register Validasyon Kuralları
@@ -74,6 +75,35 @@ const validateUpdateCostById = [
   validate,
 ];
 
+// ** Cost Category VALIDATION RULES **
+const validateCostCategoryCreation = [
+  costCategoryValidationRules.name,
+  costCategoryValidationRules.description,
+  costCategoryValidationRules.isGlobal,
+  costCategoryValidationRules.siteId,
+  validate,
+];
+
+const validateGetCostCategoriesBySiteId = [
+  costCategoryValidationRules.siteIdParam,
+  validate,
+];
+
+const validateDeleteCostCategory = [
+  costCategoryValidationRules.categoryId,
+  validate,
+];
+
+const validateUpdateCostCategory = [
+  costCategoryValidationRules.categoryId,
+  costCategoryValidationRules.nameOptional,
+  costCategoryValidationRules.descriptionOptional,
+  costCategoryValidationRules.isGlobalOptional,
+  costCategoryValidationRules.siteIdOptional,
+  costCategoryValidationRules.notEmptyBody,
+  validate,
+];
+
 module.exports = {
   // Auth
   validateRegistration,
@@ -88,4 +118,10 @@ module.exports = {
   validateGetCostBySiteId,
   validateDeleteCostById,
   validateUpdateCostById,
+  // Cost Category
+  validateCostCategoryCreation,
+  validateGetCostCategoriesBySiteId,
+  validateDeleteCostCategory,
+  validateUpdateCostCategory,
+  
 };
