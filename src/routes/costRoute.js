@@ -1,9 +1,20 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const { createCost,getCostsBySiteId,updateCostById,deleteCostById } = require('../controller/costController.js');
-const { verifyAccessToken } = require('../middlewares/authMiddleware.js');
-const { checkRole } = require('../middlewares/checkRole.js');
+const {
+  createCost,
+  getCostsBySiteId,
+  updateCostById,
+  deleteCostById,
+} = require("../controller/costController.js");
+const { verifyAccessToken } = require("../middlewares/authMiddleware.js");
+const { checkRole } = require("../middlewares/checkRole.js");
+const {
+  validateCostCreation,
+  validateGetCostBySiteId,
+  validateDeleteCostById,
+  validateUpdateCostById,
+} = require("../validators/index.js");
 
 /**
  * @swagger
@@ -295,9 +306,33 @@ const { checkRole } = require('../middlewares/checkRole.js');
  *           format: date-time
  */
 
-router.post('/', verifyAccessToken, checkRole('admin'), createCost);
-router.get('/:siteId', verifyAccessToken, checkRole('admin'), getCostsBySiteId);
-router.put('/:costId', verifyAccessToken, checkRole('admin'), updateCostById);
-router.delete('/:costId', verifyAccessToken, checkRole('admin'), deleteCostById);
+router.post(
+  "/",
+  verifyAccessToken,
+  checkRole("admin"),
+  validateCostCreation,
+  createCost
+);
+router.get(
+  "/:siteId",
+  verifyAccessToken,
+  checkRole("admin"),
+  validateGetCostBySiteId,
+  getCostsBySiteId
+);
+router.put(
+  "/:costId",
+  verifyAccessToken,
+  checkRole("admin"),
+  validateUpdateCostById,
+  updateCostById
+);
+router.delete(
+  "/:costId",
+  verifyAccessToken,
+  checkRole("admin"),
+  validateDeleteCostById,
+  deleteCostById
+);
 
 module.exports = router;

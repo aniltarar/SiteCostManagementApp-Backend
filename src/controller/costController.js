@@ -20,21 +20,7 @@ const createCost = async (req, res) => {
       fileUrl,
     } = req.body;
 
-    // validatör ile gerekli alanları kontrol et || sonra yapılacak
-    if (
-      !title ||
-      !unit ||
-      !quantity ||
-      !unitPrice ||
-      !moneyType ||
-      !costCategory ||
-      !siteId
-    ) {
-      return res.status(400).json({
-        message: "Lütfen tüm gerekli alanları doldurun.",
-      });
-    }
-
+  
     // Şantiye var mı kontrol et
     const site = await Site.findById(siteId);
     if (!site) {
