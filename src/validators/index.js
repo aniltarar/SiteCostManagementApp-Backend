@@ -27,10 +27,25 @@ const validateSiteCreation = [
   validate,
 ];
 const validateGetSiteById = [siteValidator.siteId, validate];
+const validateDeleteSiteById = [siteValidator.siteId, validate];
+
+const validateUpdateSiteById = [
+  siteValidator.siteId,
+  siteValidator.nameOptional,
+  siteValidator.locationOptional,
+  siteValidator.budgetOptional,
+  siteValidator.startDateOptional,
+  siteValidator.endDateOptional,
+  siteValidator.assignedUsersOptional,
+  siteValidator.assignedUsersIdsOptional,
+  validate,
+];
 
 module.exports = {
   validateRegistration,
   validateLogin,
   validateSiteCreation,
   validateGetSiteById,
+  validateDeleteSiteById,
+  validateUpdateSiteById,
 };

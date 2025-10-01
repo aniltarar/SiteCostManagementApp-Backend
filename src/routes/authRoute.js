@@ -76,10 +76,10 @@ const {
  *             properties:
  *               email:
  *                 type: string
- *                 example: ahmet@example.com
+ *                 example: anil@example.com
  *               password:
  *                 type: string
- *                 example: sifre123
+ *                 example: Sifre123@
  *     responses:
  *       200:
  *         description: Giriş başarılı

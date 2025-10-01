@@ -1,4 +1,4 @@
-const { body,param } = require("express-validator");
+const { body, param } = require("express-validator");
 
 const siteValidationRules = {
   name: body("name")
@@ -49,15 +49,69 @@ const siteValidationRules = {
     .optional()
     .isArray()
     .withMessage("Atanan kullanıcılar alanı bir dizi olmalıdır."),
-    // assignedUsers.* yaparak dizinin her bir elemanını kontrol ediyoruz
+  // assignedUsers.* yaparak dizinin her bir elemanını kontrol ediyoruz
   assignedUsersIds: body("assignedUsers.*")
     .optional()
     .isMongoId()
     .withMessage("Atanan kullanıcı ID'leri geçerli bir ObjectId olmalıdır."),
 
-    siteId: param("siteId")
+  siteId: param("siteId")
     .isMongoId()
-    .withMessage("Geçerli bir şantiye ID'si giriniz.")
+    .withMessage("Geçerli bir şantiye ID'si giriniz."),
+
+  //***** */ Update için ek validasyon kuralları eklenebilir
+  nameOptional: body("name")
+    .optional()
+    .trim()
+    .isLength({ min: 2, max: 50 })
+    .withMessage(
+      "Şantiye adı en az 2 karakter - en fazla 50 karakter olmalıdır."
+    ),
+
+  locationOptional: body("location")
+    .optional()
+    .trim()
+    .isLength({ min: 2, max: 100 })
+    .withMessage(
+      "Şantiye konumu en az 2 karakter - en fazla 100 karakter olmalıdır."
+    ),
+
+  budgetOptional: body("budget")
+    .optional()
+    .isFloat({ gt: 0 })
+    .withMessage("Bütçe pozitif bir sayı olmalıdır."),
+
+  startDateOptional: body("startDate")
+    .optional()
+    .isISO8601()
+    .withMessage(
+      "Geçerli bir başlangıç tarihi giriniz (YYYY-MM-DD formatında)."
+    ),
+
+  endDateOptional: body("endDate")
+    .optional()
+    .isISO8601()
+    .withMessage("Geçerli bir bitiş tarihi giriniz (YYYY-MM-DD formatında).")
+    .custom((value, { req }) => {
+      if (
+        req.body.startDate &&
+        new Date(value) <= new Date(req.body.startDate)
+      ) {
+        throw new Error("Bitiş tarihi, başlangıç tarihinden sonra olmalıdır.");
+      }
+      return true;
+    }),
+
+  // assignedUsers zaten optional, ama tutarlılık için
+  assignedUsersOptional: body("assignedUsers")
+    .optional()
+    .isArray()
+    .withMessage("Atanan kullanıcılar alanı bir dizi olmalıdır."),
+
+  assignedUsersIdsOptional: body("assignedUsers.*")
+    .optional()
+    .isMongoId()
+    .withMessage("Atanan kullanıcı ID'leri geçerli bir ObjectId olmalıdır."),
 };
 
 module.exports = siteValidationRules;
