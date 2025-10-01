@@ -23,6 +23,7 @@ const validateSiteCreation = [
   siteValidator.startDate,
   siteValidator.endDate,
   siteValidator.assignedUsers,
+  siteValidator.assignedUsersIds,
   validate,
 ];
 const validateGetSiteById = [siteValidator.siteId, validate];
