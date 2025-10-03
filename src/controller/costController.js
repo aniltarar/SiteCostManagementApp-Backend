@@ -16,9 +16,13 @@ const createCost = async (req, res) => {
       moneyType,
       costCategory,
       siteId,
-
-      fileUrl,
     } = req.body;
+
+    // Dosya yüklenmiş mi kontrol et, url oluştur
+    let fileUrl = null;
+    if(req.file){
+      fileUrl = `/uploads/costs/${siteId}/${req.file.filename}`;
+    }
 
   
     // Şantiye var mı kontrol et

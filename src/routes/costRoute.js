@@ -15,6 +15,7 @@ const {
   validateDeleteCostById,
   validateUpdateCostById,
 } = require("../validators/index.js");
+const upload = require("../config/multerConfig.js");
 
 /**
  * @swagger
@@ -34,7 +35,7 @@ const {
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             required:
@@ -73,24 +74,15 @@ const {
  *               siteId:
  *                 type: string
  *                 example: 6898ec00ca777605c79a7106
- *               fileUrl:
+ *               file:
  *                 type: string
- *                 example: https://example.com/uploads/beton-faturasi.pdf
+ *                 format: binary
+ *                 description: Fatura veya belge dosyası (JPEG, PNG, JPG, PDF - Max 15MB)
  *     responses:
  *       201:
  *         description: Gider başarıyla oluşturuldu
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Maliyet başarıyla oluşturuldu.
- *                 cost:
- *                   $ref: '#/components/schemas/Cost'
  *       400:
- *         description: Eksik veya hatalı alanlar
+ *         description: Dosya hatası veya eksik alanlar
  *       401:
  *         description: Kullanıcı doğrulanamadı
  *       403:
@@ -100,6 +92,7 @@ const {
  *       500:
  *         description: Sunucu hatası
  */
+
 
 /**
  * @swagger
@@ -310,6 +303,7 @@ router.post(
   "/",
   verifyAccessToken,
   checkRole("admin"),
+  upload.single("file"),
   validateCostCreation,
   createCost
 );
