@@ -11,6 +11,7 @@ const authRoute = require("./routes/authRoute.js");
 const siteRoute = require("./routes/siteRoute.js");
 const costCategoryRoute = require("./routes/costCategoryRoute.js");
 const costRoute = require("./routes/costRoute.js");
+const userRoute = require("./routes/userRoute.js");
 
 const app = express();
 dotenv.config();
@@ -34,6 +35,7 @@ app.get("/", (req, res) => {
 
 // Routes
 app.use("/auth", authRoute);
+app.use("/user",userRoute)
 app.use("/site", siteRoute);
 app.use("/cost-category", costCategoryRoute);
 app.use("/cost", costRoute);
